@@ -29,6 +29,7 @@ ENV PACKAGES augeas-tools \
              libdevmapper-dev \
              libfuse-dev \
              libgnutls28-dev \
+             libjansson-dev \
              libnetcf-dev \
              libnl-3-dev \
              libnl-route-3-dev \
@@ -51,7 +52,6 @@ ENV PACKAGES augeas-tools \
              libxen-dev \
              libxml2-dev \
              libxml2-utils \
-             libyajl-dev \
              lvm2 \
              make \
              nfs-common \

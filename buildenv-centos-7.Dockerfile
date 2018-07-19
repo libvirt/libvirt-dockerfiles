@@ -23,6 +23,7 @@ ENV PACKAGES audit-libs-devel \
              gnutls-devel \
              iproute \
              iscsi-initiator-utils \
+             jansson-devel \
              libacl-devel \
              libattr-devel \
              libblkid-devel \
@@ -63,8 +64,7 @@ ENV PACKAGES audit-libs-devel \
              scrub \
              sudo \
              systemtap-sdt-devel \
-             vim \
-             yajl-devel
+             vim
 RUN yum install -y ${PACKAGES} && \
     yum autoremove -y && \
     yum clean all -y
