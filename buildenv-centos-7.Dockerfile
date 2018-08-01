@@ -65,6 +65,7 @@ ENV PACKAGES audit-libs-devel \
              sudo \
              systemtap-sdt-devel \
              vim
-RUN yum install -y ${PACKAGES} && \
+RUN yum update -y && \
+    yum install -y ${PACKAGES} && \
     yum autoremove -y && \
     yum clean all -y
