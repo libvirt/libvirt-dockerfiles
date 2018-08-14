@@ -26,7 +26,6 @@ ENV PACKAGES audit-libs-devel \
              iproute \
              iproute-tc \
              iscsi-initiator-utils \
-             jansson-devel \
              libacl-devel \
              libattr-devel \
              libblkid-devel \
@@ -96,6 +95,7 @@ ENV PACKAGES audit-libs-devel \
              vim \
              wireshark-devel \
              xen-devel \
+             yajl-devel \
              zfs-fuse
 RUN yum update -y && \
     yum install -y ${PACKAGES} && \
