@@ -31,6 +31,7 @@ ENV PACKAGES audit-libs-devel \
              libblkid-devel \
              libcap-ng-devel \
              libcurl-devel \
+             libiscsi-devel \
              libnl3-devel \
              libpcap-devel \
              libpciaccess-devel \
@@ -97,7 +98,8 @@ ENV PACKAGES audit-libs-devel \
              xen-devel \
              yajl-devel \
              zfs-fuse
-RUN yum update -y && \
+RUN yum update -y --nogpgcheck fedora-gpg-keys && \
+    yum update -y && \
     yum install -y ${PACKAGES} && \
     yum autoremove -y && \
     yum clean all -y

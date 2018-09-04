@@ -29,6 +29,7 @@ ENV PACKAGES augeas-tools \
              libdevmapper-dev \
              libfuse-dev \
              libgnutls28-dev \
+             libiscsi-dev \
              libnetcf-dev \
              libnl-3-dev \
              libnl-route-3-dev \

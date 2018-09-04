@@ -28,6 +28,7 @@ ENV PACKAGES audit-libs-devel \
              libblkid-devel \
              libcap-ng-devel \
              libcurl-devel \
+             libiscsi-devel \
              libnl3-devel \
              libpcap-devel \
              libpciaccess-devel \
