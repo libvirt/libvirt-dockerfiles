@@ -20,7 +20,7 @@ do
     dockerfile="$here/buildenv-${host#libvirt-}.Dockerfile"
 
     case "$host" in
-        libvirt-fedora-rawhide) projects="libvirt,libvirt+mingw" ;;
+        libvirt-fedora-rawhide) projects="libvirt,libvirt+mingw*" ;;
         libvirt-freebsd-*)      continue ;;
     esac
 
