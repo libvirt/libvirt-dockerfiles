@@ -20,6 +20,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             git \
             glusterfs-common \
             iproute2 \
+            kmod \
             libacl1-dev \
             libapparmor-dev \
             libattr1-dev \

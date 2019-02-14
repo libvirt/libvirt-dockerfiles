@@ -25,6 +25,7 @@ RUN yum update -y && \
             gnutls-devel \
             iproute \
             iscsi-initiator-utils \
+            kmod \
             libacl-devel \
             libattr-devel \
             libblkid-devel \

@@ -28,6 +28,7 @@ RUN yum update -y && \
             iproute \
             iproute-tc \
             iscsi-initiator-utils \
+            kmod \
             libacl-devel \
             libattr-devel \
             libblkid-devel \

@@ -19,6 +19,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             gettext \
             git \
             iproute2 \
+            kmod \
             libacl1-dev \
             libapparmor-dev \
             libattr1-dev \

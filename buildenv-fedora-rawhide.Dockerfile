@@ -29,6 +29,7 @@ RUN yum update -y --nogpgcheck fedora-gpg-keys && \
             iproute \
             iproute-tc \
             iscsi-initiator-utils \
+            kmod \
             libacl-devel \
             libattr-devel \
             libblkid-devel \
