@@ -14,7 +14,7 @@ cd "$ci_repo/guests/" >/dev/null 2>&1 || {
     die "Usage: $me path/to/libvirt-jenkins-ci.git"
 }
 
-for host in $(./lcitool -a hosts)
+for host in $(./lcitool hosts)
 do
     projects="libvirt"
     dockerfile="$here/buildenv-${host#libvirt-}.Dockerfile"
@@ -24,7 +24,7 @@ do
         libvirt-freebsd-*)      continue ;;
     esac
 
-    ./lcitool -a dockerfile -h "$host" -p "$projects" >"$dockerfile" || {
+    ./lcitool dockerfile "$host" "$projects" >"$dockerfile" || {
         die "$me: Failed to refresh Dockerfile for $host"
     }
 done
