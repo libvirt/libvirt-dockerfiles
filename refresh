@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+
+# refresh - Refresh Dockerfiles using lcitool
+# Copyright (C) 2019  Andrea Bolognani <abologna@redhat.com>
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+# Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program. If not, see <https://www.gnu.org/licenses/>.
+
+import pathlib
+import subprocess
+import sys
+
+
+class Error(Exception):
+
+    def __init__(self, message):
+        super(Error, self).__init__()
+        self.message = message
+
+
+class MoveAlongException(Exception):
+    pass
+
+
+class Dockerfile:
+
+    PREFIX = "buildenv-"
+    SUFFIX = ".Dockerfile"
+
+    def __init__(self, path):
+
+        # Files that don't end with the expected suffix can be safely
+        # ignores
+        if not path.suffix == Dockerfile.SUFFIX:
+            raise MoveAlongException()
+
+        # Files that don't follow the expected format should be reported
+        if not path.stem.startswith(Dockerfile.PREFIX):
+            raise Error("Invalid name '{}'".format(path.stem))
+
+        self.path = path
+        self.os = path.stem[len(Dockerfile.PREFIX):]
+
+        # Fedora Rawhide is special in that we use it to perform MinGW
+        # builds, so we need to add the corresponding projects
+        if self.os == "fedora-rawhide":
+            self.projects = "libvirt,libvirt+mingw*"
+        else:
+            self.projects = "libvirt"
+
+    def refresh(self, lcitool):
+
+        args = [
+            lcitool,
+            "dockerfile",
+            "libvirt-" + self.os,
+            self.projects,
+        ]
+
+        rc = subprocess.run(args, capture_output=True)
+
+        if rc.returncode != 0:
+            raise Error("lcitool failed: {}".format(rc.stderr.decode()))
+
+        with self.path.open('w') as f:
+            print(rc.stdout.decode().strip(), file=f)
+
+
+class Application:
+
+    def __init__(self):
+
+        # Find the directory the script lives in
+        me = pathlib.Path(sys.argv[0]).resolve()
+        self.here = me.parent
+
+        # If an argument has been provided, we're going to consider it as
+        # the path to a clone of libvirt-jenkins-ci.git; otherwise, we're
+        # going to assume such a clone exists besides the clone of
+        # libvirt-dockerfiles.git we're running the script from
+        if len(sys.argv) >= 2:
+            ci_repo = pathlib.Path(sys.argv[1]).resolve()
+        else:
+            ci_repo = self.here.parent.joinpath("libvirt-jenkins-ci")
+
+        self.lcitool = ci_repo.joinpath("guests").joinpath("lcitool")
+
+        if not self.lcitool.exists():
+            raise Error("{} does not exist".format(self.lcitool))
+
+    def run(self):
+
+        for item in self.here.iterdir():
+            try:
+                dockerfile = Dockerfile(item)
+            except MoveAlongException:
+                continue
+
+            print(item.stem + item.suffix)
+            dockerfile.refresh(self.lcitool)
+
+
+if __name__ == "__main__":
+    try:
+        Application().run()
+    except Error as err:
+        sys.stderr.write("{}: {}\n".format(sys.argv[0], err.message))
+        sys.exit(1)
