@@ -35,6 +35,7 @@ class MoveAlongException(Exception):
 class Dockerfile:
 
     PREFIX = "buildenv-"
+    CROSS  = "-cross-"
     SUFFIX = ".Dockerfile"
 
     def __init__(self, path):
@@ -49,7 +50,20 @@ class Dockerfile:
             raise Error("Invalid name '{}'".format(path.stem))
 
         self.path = path
-        self.os = path.stem[len(Dockerfile.PREFIX):]
+        stem = path.stem[len(Dockerfile.PREFIX):]
+        cross = stem.rfind(Dockerfile.CROSS)
+
+        if cross >= 0:
+            # If we found CROSS, then everything before it is the name of
+            # the OS and everything after it the name of the architecture
+            # we're targeting for cross-compilation
+            self.os = stem[:cross]
+            self.cross_arch = stem[cross + len(Dockerfile.CROSS):]
+        else:
+            # Otherwise the entire stem is the name of the OS and there
+            # is no cross-compilation architecture
+            self.os = stem
+            self.cross_arch = None
 
         # Fedora Rawhide is special in that we use it to perform MinGW
         # builds, so we need to add the corresponding projects
@@ -63,6 +77,16 @@ class Dockerfile:
         args = [
             lcitool,
             "dockerfile",
+        ]
+
+        # Pass the cross-compilation architecture if present
+        if self.cross_arch is not None:
+            args += [
+                "--cross-arch",
+                self.cross_arch,
+            ]
+
+        args += [
             "libvirt-" + self.os,
             self.projects,
         ]
