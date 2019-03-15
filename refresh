@@ -35,7 +35,7 @@ class MoveAlongException(Exception):
 class Dockerfile:
 
     PREFIX = "buildenv-"
-    CROSS  = "-cross-"
+    CROSS = "-cross-"
     SUFFIX = ".Dockerfile"
 
     def __init__(self, path):
