@@ -117,19 +117,20 @@ class Application:
 
     def run(self):
 
-        for item in self.here.iterdir():
-            try:
-                dockerfile = Dockerfile(item)
-            except MoveAlongException:
-                continue
+        try:
+            for item in self.here.iterdir():
+                try:
+                    dockerfile = Dockerfile(item)
+                except MoveAlongException:
+                    continue
 
-            print(item.stem + item.suffix)
-            dockerfile.refresh(self.lcitool)
+                print(item.stem + item.suffix)
+                dockerfile.refresh(self.lcitool)
+
+        except Exception as ex:
+            sys.stderr.write("{}: {}\n".format(sys.argv[0], ex))
+            sys.exit(1)
 
 
 if __name__ == "__main__":
-    try:
-        Application().run()
-    except Exception as ex:
-        sys.stderr.write("{}: {}\n".format(sys.argv[0], ex))
-        sys.exit(1)
+    Application().run()
