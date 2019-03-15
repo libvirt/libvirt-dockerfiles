@@ -21,13 +21,6 @@ import subprocess
 import sys
 
 
-class Error(Exception):
-
-    def __init__(self, message):
-        super(Error, self).__init__()
-        self.message = message
-
-
 class MoveAlongException(Exception):
     pass
 
@@ -47,7 +40,7 @@ class Dockerfile:
 
         # Files that don't follow the expected format should be reported
         if not path.stem.startswith(Dockerfile.PREFIX):
-            raise Error("Invalid name '{}'".format(path.stem))
+            raise Exception("Invalid name '{}'".format(path.stem))
 
         self.path = path
         stem = path.stem[len(Dockerfile.PREFIX):]
@@ -94,7 +87,7 @@ class Dockerfile:
         rc = subprocess.run(args, capture_output=True)
 
         if rc.returncode != 0:
-            raise Error("lcitool failed: {}".format(rc.stderr.decode()))
+            raise Exception("lcitool failed: {}".format(rc.stderr.decode()))
 
         with self.path.open('w') as f:
             print(rc.stdout.decode().strip(), file=f)
@@ -120,7 +113,7 @@ class Application:
         self.lcitool = ci_repo.joinpath("guests").joinpath("lcitool")
 
         if not self.lcitool.exists():
-            raise Error("{} does not exist".format(self.lcitool))
+            raise Exception("{} does not exist".format(self.lcitool))
 
     def run(self):
 
@@ -137,6 +130,6 @@ class Application:
 if __name__ == "__main__":
     try:
         Application().run()
-    except Error as err:
-        sys.stderr.write("{}: {}\n".format(sys.argv[0], err.message))
+    except Exception as ex:
+        sys.stderr.write("{}: {}\n".format(sys.argv[0], ex))
         sys.exit(1)
