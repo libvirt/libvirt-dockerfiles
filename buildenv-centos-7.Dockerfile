@@ -8,6 +8,7 @@ RUN yum update -y && \
             avahi-devel \
             bash \
             bash-completion \
+            ca-certificates \
             chrony \
             cyrus-sasl-devel \
             dbus-devel \
@@ -16,6 +17,7 @@ RUN yum update -y && \
             ebtables \
             fuse-devel \
             gcc \
+            gdb \
             gettext \
             gettext-devel \
             git \
@@ -46,8 +48,10 @@ RUN yum update -y && \
             libxml2 \
             libxml2-devel \
             libxslt \
+            lsof \
             lvm2 \
             make \
+            net-tools \
             netcf-devel \
             nfs-utils \
             numactl-devel \
@@ -65,6 +69,7 @@ RUN yum update -y && \
             sanlock-devel \
             screen \
             scrub \
+            strace \
             sudo \
             systemtap-sdt-devel \
             vim \

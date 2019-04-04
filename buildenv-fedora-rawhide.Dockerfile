@@ -9,6 +9,7 @@ RUN yum update -y --nogpgcheck fedora-gpg-keys && \
             avahi-devel \
             bash \
             bash-completion \
+            ca-certificates \
             ccache \
             chrony \
             cppi \
@@ -20,6 +21,7 @@ RUN yum update -y --nogpgcheck fedora-gpg-keys && \
             ebtables \
             fuse-devel \
             gcc \
+            gdb \
             gettext \
             gettext-devel \
             git \
@@ -50,6 +52,7 @@ RUN yum update -y --nogpgcheck fedora-gpg-keys && \
             libxml2 \
             libxml2-devel \
             libxslt \
+            lsof \
             lvm2 \
             make \
             mingw32-curl \
@@ -76,6 +79,7 @@ RUN yum update -y --nogpgcheck fedora-gpg-keys && \
             mingw64-pkg-config \
             mingw64-portablexdr \
             mingw64-readline \
+            net-tools \
             netcf-devel \
             nfs-utils \
             numactl-devel \
@@ -95,6 +99,7 @@ RUN yum update -y --nogpgcheck fedora-gpg-keys && \
             screen \
             scrub \
             sheepdog \
+            strace \
             sudo \
             systemtap-sdt-devel \
             vim \

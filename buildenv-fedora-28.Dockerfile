@@ -8,6 +8,7 @@ RUN yum update -y && \
             avahi-devel \
             bash \
             bash-completion \
+            ca-certificates \
             ccache \
             chrony \
             cppi \
@@ -19,6 +20,7 @@ RUN yum update -y && \
             ebtables \
             fuse-devel \
             gcc \
+            gdb \
             gettext \
             gettext-devel \
             git \
@@ -49,8 +51,10 @@ RUN yum update -y && \
             libxml2 \
             libxml2-devel \
             libxslt \
+            lsof \
             lvm2 \
             make \
+            net-tools \
             netcf-devel \
             nfs-utils \
             numactl-devel \
@@ -70,6 +74,7 @@ RUN yum update -y && \
             screen \
             scrub \
             sheepdog \
+            strace \
             sudo \
             systemtap-sdt-devel \
             vim \

@@ -10,12 +10,14 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             autopoint \
             bash \
             bash-completion \
+            ca-certificates \
             ccache \
             chrony \
             dnsmasq-base \
             dwarves \
             ebtables \
             gcc \
+            gdb \
             gettext \
             git \
             iproute2 \
@@ -24,8 +26,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             libtool \
             libtool-bin \
             libxml2-utils \
+            lsof \
             lvm2 \
             make \
+            net-tools \
             nfs-common \
             numad \
             open-iscsi \
@@ -39,6 +43,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             screen \
             scrub \
             sheepdog \
+            strace \
             sudo \
             vim \
             xsltproc \

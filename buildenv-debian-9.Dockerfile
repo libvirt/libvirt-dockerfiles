@@ -10,12 +10,14 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             autopoint \
             bash \
             bash-completion \
+            ca-certificates \
             ccache \
             chrony \
             dnsmasq-base \
             dwarves \
             ebtables \
             gcc \
+            gdb \
             gettext \
             git \
             glusterfs-common \
@@ -58,8 +60,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             libxml2-dev \
             libxml2-utils \
             libyajl-dev \
+            lsof \
             lvm2 \
             make \
+            net-tools \
             nfs-common \
             numad \
             open-iscsi \
@@ -73,6 +77,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             screen \
             scrub \
             sheepdog \
+            strace \
             sudo \
             systemtap-sdt-dev \
             vim \
