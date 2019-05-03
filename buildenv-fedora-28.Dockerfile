@@ -54,6 +54,7 @@ RUN yum update -y && \
             lsof \
             lvm2 \
             make \
+            ncurses-devel \
             net-tools \
             netcf-devel \
             nfs-utils \

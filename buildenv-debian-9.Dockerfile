@@ -38,6 +38,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             libfuse-dev \
             libgnutls28-dev \
             libiscsi-dev \
+            libncurses5-dev \
             libnetcf-dev \
             libnl-3-dev \
             libnl-route-3-dev \

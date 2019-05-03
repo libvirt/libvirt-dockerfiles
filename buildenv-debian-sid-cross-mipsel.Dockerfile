@@ -71,6 +71,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             libglusterfs-dev:mipsel \
             libgnutls28-dev:mipsel \
             libiscsi-dev:mipsel \
+            libncurses-dev:mipsel \
             libnl-3-dev:mipsel \
             libnl-route-3-dev:mipsel \
             libnuma-dev:mipsel \

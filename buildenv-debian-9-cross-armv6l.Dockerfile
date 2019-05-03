@@ -72,6 +72,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             libfuse-dev:armel \
             libgnutls28-dev:armel \
             libiscsi-dev:armel \
+            libncurses5-dev:armel \
             libnl-3-dev:armel \
             libnl-route-3-dev:armel \
             libparted-dev:armel \

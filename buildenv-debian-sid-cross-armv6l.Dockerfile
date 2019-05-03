@@ -71,6 +71,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             libglusterfs-dev:armel \
             libgnutls28-dev:armel \
             libiscsi-dev:armel \
+            libncurses-dev:armel \
             libnl-3-dev:armel \
             libnl-route-3-dev:armel \
             libparted-dev:armel \

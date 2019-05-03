@@ -79,6 +79,7 @@ RUN yum update -y --nogpgcheck fedora-gpg-keys && \
             mingw64-pkg-config \
             mingw64-portablexdr \
             mingw64-readline \
+            ncurses-devel \
             net-tools \
             netcf-devel \
             nfs-utils \

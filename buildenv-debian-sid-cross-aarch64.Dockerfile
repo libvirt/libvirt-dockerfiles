@@ -71,6 +71,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
             libglusterfs-dev:arm64 \
             libgnutls28-dev:arm64 \
             libiscsi-dev:arm64 \
+            libncurses-dev:arm64 \
             libnl-3-dev:arm64 \
             libnl-route-3-dev:arm64 \
             libnuma-dev:arm64 \
