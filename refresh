@@ -58,12 +58,16 @@ class Dockerfile:
             self.os = stem
             self.cross_arch = None
 
+        self.projects = [
+            "libvirt",
+        ]
+
         # Fedora Rawhide is special in that we use it to perform MinGW
         # builds, so we need to add the corresponding projects
         if self.os == "fedora-rawhide":
-            self.projects = "libvirt,libvirt+mingw*"
-        else:
-            self.projects = "libvirt"
+            self.projects += [
+                "libvirt+mingw*",
+            ]
 
     def refresh(self, lcitool):
 
@@ -81,7 +85,7 @@ class Dockerfile:
 
         args += [
             "libvirt-" + self.os,
-            self.projects,
+            ",".join(self.projects)
         ]
 
         rc = subprocess.run(args, capture_output=True)
