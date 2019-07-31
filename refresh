@@ -34,7 +34,7 @@ class Dockerfile:
     def __init__(self, path):
 
         # Files that don't end with the expected suffix can be safely
-        # ignores
+        # ignored
         if not path.suffix == Dockerfile.SUFFIX:
             raise MoveAlongException()
 
