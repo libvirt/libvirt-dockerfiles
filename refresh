@@ -42,6 +42,11 @@ class Dockerfile:
         "libvirt" : {
             "libvirt" : True
         },
+        "libosinfo" : {
+            "libosinfo" : True,
+            "osinfo-db" : False,
+            "osinfo-db-tools" : True
+        },
     }
 
     def __init__(self, path):
