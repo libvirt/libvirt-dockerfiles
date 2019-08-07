@@ -31,6 +31,19 @@ class Dockerfile:
     CROSS = "-cross-"
     SUFFIX = ".Dockerfile"
 
+    # PROJECTS is a dictionary of dictionaries.
+    # The key is the project name, as present in the Dockerfile name and
+    # the value is a dictionary containing the subprojects which the
+    # dependencies should be installed together as the key and their value
+    # being whether they support mingw builds or not.
+    # This hack is needed till the moment libvirt-jenkins-ci treats mingw
+    # builds in the very same way as cross-builds are treated.
+    PROJECTS = {
+        "libvirt" : {
+            "libvirt" : True
+        },
+    }
+
     def __init__(self, path):
 
         # Files that don't end with the expected suffix can be safely
@@ -44,30 +57,45 @@ class Dockerfile:
 
         self.path = path
         stem = path.stem[len(Dockerfile.PREFIX):]
+
+        self.projects = []
+
+        for project in Dockerfile.PROJECTS:
+            if stem.rfind(project + "-") >= 0:
+                self.project_name = project
+                stem = stem[len(self.project_name) + 1:]
+                for subproject in Dockerfile.PROJECTS[project]:
+                    self.projects += [subproject]
+                break
+
+        if self.projects == []:
+            raise Exception("File '{}' does not have any matching "
+                            "project.".format(path))
+
         cross = stem.rfind(Dockerfile.CROSS)
 
         if cross >= 0:
-            # If we found CROSS, then everything before it is the name of
-            # the OS and everything after it the name of the architecture
-            # we're targeting for cross-compilation
+            # If we found CROSS, then everything in between the project's
+            # name and the cross is the name of the OS and everything after
+            # it the name of the architecture we're targeting for
+            # cross-compilation
             self.os = stem[:cross]
             self.cross_arch = stem[cross + len(Dockerfile.CROSS):]
         else:
-            # Otherwise the entire stem is the name of the OS and there
-            # is no cross-compilation architecture
+            # Otherwise the name of the OS starts just after the project's
+            # name and there is no cross-compilation architecture
             self.os = stem
             self.cross_arch = None
-
-        self.projects = [
-            "libvirt",
-        ]
 
         # Fedora Rawhide is special in that we use it to perform MinGW
         # builds, so we need to add the corresponding projects
         if self.os == "fedora-rawhide":
-            self.projects += [
-                "libvirt+mingw*",
-            ]
+            mingw_projects = []
+            for subproject in self.projects:
+                if Dockerfile.PROJECTS[self.project_name][subproject]:
+                    mingw_projects += [subproject + "+mingw*"]
+
+            self.projects += mingw_projects
 
     def refresh(self, lcitool):
 
