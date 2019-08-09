@@ -65,6 +65,8 @@ class Dockerfile:
 
         project_name = None
 
+        # Now that we've removed the prefix, we expect to find the name
+        # of one of the known projects, followed by a dash
         for project in Dockerfile.PROJECTS:
             if stem.startswith(project + "-"):
                 stem = stem[len(project) + 1:]
@@ -78,15 +80,14 @@ class Dockerfile:
         cross = stem.rfind(Dockerfile.CROSS)
 
         if cross >= 0:
-            # If we found CROSS, then everything in between the project's
-            # name and the cross is the name of the OS and everything after
-            # it the name of the architecture we're targeting for
-            # cross-compilation
+            # If we found CROSS, then everything before it is the name of
+            # the OS and everything after it the name of the architecture
+            # we're targeting for cross-compilation
             self.os = stem[:cross]
             self.cross_arch = stem[cross + len(Dockerfile.CROSS):]
         else:
-            # Otherwise the name of the OS starts just after the project's
-            # name and there is no cross-compilation architecture
+            # Otherwise the entire stem is the name of the OS and there
+            # is no cross-compilation architecture
             self.os = stem
             self.cross_arch = None
 
@@ -95,7 +96,9 @@ class Dockerfile:
         for project in Dockerfile.PROJECTS[project_name]:
             self.projects += [project]
             # Fedora Rawhide is special in that we use it to perform MinGW
-            # builds, so we need to add the corresponding projects
+            # builds, so we need to add the corresponding projects as well.
+            # If a specific project needs to have the MinGW variant included,
+            # the corresponding value in the dictionary will be True
             if (self.os == "fedora-rawhide" and
                 Dockerfile.PROJECTS[project_name][project]):
                 self.projects += [project + "+mingw*"]
