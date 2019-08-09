@@ -66,9 +66,9 @@ class Dockerfile:
         project_name = None
 
         for project in Dockerfile.PROJECTS:
-            if stem.rfind(project + "-") >= 0:
+            if stem.startswith(project + "-"):
+                stem = stem[len(project) + 1:]
                 project_name = project
-                stem = stem[len(project_name) + 1:]
                 break
 
         if not project_name:
