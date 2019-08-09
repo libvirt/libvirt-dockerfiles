@@ -63,18 +63,15 @@ class Dockerfile:
         self.path = path
         stem = path.stem[len(Dockerfile.PREFIX):]
 
-        self.projects = []
         project_name = None
 
         for project in Dockerfile.PROJECTS:
             if stem.rfind(project + "-") >= 0:
                 project_name = project
                 stem = stem[len(project_name) + 1:]
-                for subproject in Dockerfile.PROJECTS[project]:
-                    self.projects += [subproject]
                 break
 
-        if self.projects == []:
+        if not project_name:
             raise Exception("File '{}' does not have any matching "
                             "project.".format(path))
 
@@ -93,15 +90,16 @@ class Dockerfile:
             self.os = stem
             self.cross_arch = None
 
-        # Fedora Rawhide is special in that we use it to perform MinGW
-        # builds, so we need to add the corresponding projects
-        if self.os == "fedora-rawhide":
-            mingw_projects = []
-            for subproject in self.projects:
-                if Dockerfile.PROJECTS[project_name][subproject]:
-                    mingw_projects += [subproject + "+mingw*"]
+        self.projects = []
 
-            self.projects += mingw_projects
+        for project in Dockerfile.PROJECTS[project_name]:
+            self.projects += [project]
+            # Fedora Rawhide is special in that we use it to perform MinGW
+            # builds, so we need to add the corresponding projects
+            if (self.os == "fedora-rawhide" and
+                Dockerfile.PROJECTS[project_name][project]):
+                self.projects += [project + "+mingw*"]
+
 
     def refresh(self, lcitool):
 
