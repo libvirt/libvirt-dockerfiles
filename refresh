@@ -29,7 +29,7 @@ class Dockerfile:
 
     PREFIX = "buildenv-"
     CROSS = "-cross-"
-    SUFFIX = ".Dockerfile"
+    SUFFIX = ".zip"
 
     # PROJECTS is a dictionary of dictionaries.
     # The key is the project name, as present in the Dockerfile name and
@@ -106,6 +106,8 @@ class Dockerfile:
 
     def refresh(self, lcitool):
 
+        dockerfile = pathlib.Path("./Dockerfile")
+
         args = [
             lcitool,
             "dockerfile",
@@ -128,8 +130,23 @@ class Dockerfile:
         if rc.returncode != 0:
             raise Exception("lcitool failed: {}".format(rc.stderr.decode()))
 
-        with self.path.open('w') as f:
+        with dockerfile.open('w') as f:
             print(rc.stdout.decode().strip(), file=f)
+
+        self.path.unlink()
+
+        args = [
+            "zip",
+            self.path,
+            dockerfile,
+        ]
+
+        rc = subprocess.run(args, capture_output=True)
+
+        if rc.returncode != 0:
+            raise Exception("zip failed: {}".format(rc.stderr.decode()))
+
+        dockerfile.unlink()
 
 
 class Application:
