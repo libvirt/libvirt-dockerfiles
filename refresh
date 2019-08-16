@@ -95,11 +95,11 @@ class Dockerfile:
 
         for project in Dockerfile.PROJECTS[project_name]:
             self.projects += [project]
-            # Fedora Rawhide is special in that we use it to perform MinGW
+            # Fedora 30 is special in that we use it to perform MinGW
             # builds, so we need to add the corresponding projects as well.
             # If a specific project needs to have the MinGW variant included,
             # the corresponding value in the dictionary will be True
-            if (self.os == "fedora-rawhide" and
+            if (self.os == "fedora-30" and
                 Dockerfile.PROJECTS[project_name][project]):
                 self.projects += [project + "+mingw*"]
 
