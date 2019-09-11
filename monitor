@@ -1,0 +1,40 @@
+#!/bin/sh
+
+QUAYADMIN="../libvirt-jenkins-ci/guests/quayadmin"
+
+usage() {
+    echo "Usage: monitor INFILE INTERVAL" >&2
+    exit 1
+}
+
+infile="$1"
+interval="$2"
+
+test "$infile" || usage
+test "$interval" || usage
+
+while true; do
+    reset
+    output=no
+
+    while read _ build _ _ _ repository; do
+        repository="${repository#*/}"
+
+        out=$("$QUAYADMIN" show-build libvirt "$repository" "$build")
+        phase=$(echo "$out" | grep phase: | sed -E 's/.*: //g')
+
+        if test "$phase" = "complete"; then
+            continue
+        fi
+
+        echo "libvirt/$repository: $phase"
+        output=yes
+
+    done <"$infile"
+
+    if test "$output" == "no"; then
+        break
+    fi
+
+    sleep "$interval"
+done
