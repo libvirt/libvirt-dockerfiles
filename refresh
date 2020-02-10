@@ -31,22 +31,19 @@ class Dockerfile:
     CROSS = "-cross-"
     SUFFIX = ".zip"
 
-    # PROJECTS is a dictionary of dictionaries.
+    # PROJECTS is a dictionary of lists.
     # The key is the project name, as present in the Dockerfile name and
-    # the value is a dictionary containing the subprojects which the
-    # dependencies should be installed together as the key and their value
-    # being whether they support mingw builds or not.
-    # This hack is needed till the moment libvirt-jenkins-ci treats mingw
-    # builds in the very same way as cross-builds are treated.
+    # the value is a list containing the subprojects which the
+    # dependencies should be installed together as.
     PROJECTS = {
-        "libvirt" : {
-            "libvirt" : True
-        },
-        "libosinfo" : {
-            "libosinfo" : True,
-            "osinfo-db" : False,
-            "osinfo-db-tools" : True
-        },
+        "libvirt" : [
+            "libvirt"
+        ],
+        "libosinfo" : [
+            "libosinfo",
+            "osinfo-db",
+            "osinfo-db-tools",
+        ],
     }
 
     def __init__(self, path):
@@ -91,17 +88,7 @@ class Dockerfile:
             self.os = stem
             self.cross_arch = None
 
-        self.projects = []
-
-        for project in Dockerfile.PROJECTS[project_name]:
-            self.projects += [project]
-            # Fedora 30 is special in that we use it to perform MinGW
-            # builds, so we need to add the corresponding projects as well.
-            # If a specific project needs to have the MinGW variant included,
-            # the corresponding value in the dictionary will be True
-            if (self.os == "fedora-30" and
-                Dockerfile.PROJECTS[project_name][project]):
-                self.projects += [project + "+mingw*"]
+        self.projects = Dockerfile.PROJECTS[project_name]
 
 
     def refresh(self, lcitool):
