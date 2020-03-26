@@ -16,7 +16,7 @@ test "$outfile" || usage
 while read zip
 do
     repository="${zip%.zip}"
-    url="https://github.com/libvirt/libvirt-dockerfiles/raw/master/$zip"
+    url="https://gitlab.com/libvirt/libvirt-dockerfiles/-/raw/master/$zip"
 
     "$QUAYADMIN" create-build libvirt "$repository" "$url"
 
