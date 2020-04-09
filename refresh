@@ -145,13 +145,13 @@ class Application:
         self.here = me.parent
 
         # If an argument has been provided, we're going to consider it as
-        # the path to a clone of libvirt-jenkins-ci.git; otherwise, we're
+        # the path to a clone of libvirt-ci.git; otherwise, we're
         # going to assume such a clone exists besides the clone of
         # libvirt-dockerfiles.git we're running the script from
         if len(sys.argv) >= 2:
             ci_repo = pathlib.Path(sys.argv[1]).resolve()
         else:
-            ci_repo = self.here.parent.joinpath("libvirt-jenkins-ci")
+            ci_repo = self.here.parent.joinpath("libvirt-ci")
 
         self.lcitool = ci_repo.joinpath("guests").joinpath("lcitool")
 
