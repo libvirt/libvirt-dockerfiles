@@ -1,6 +1,6 @@
 #!/bin/sh
 
-QUAYADMIN="../libvirt-jenkins-ci/guests/quayadmin"
+QUAYADMIN="../libvirt-ci/guests/quayadmin"
 
 usage() {
     echo "Usage: trigger INFILE OUTFILE" >&2
