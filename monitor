@@ -1,6 +1,6 @@
 #!/bin/sh
 
-QUAYADMIN="../libvirt-jenkins-ci/guests/quayadmin"
+QUAYADMIN="../libvirt-ci/guests/quayadmin"
 
 usage() {
     echo "Usage: monitor INFILE INTERVAL" >&2
