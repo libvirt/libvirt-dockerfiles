@@ -47,6 +47,5 @@ Information about build dependencies
 
 The list of build dependencies for libvirt (as well as many
 other virtualization-related projects) is taken from the
-[libvirt-jenkins-ci](https://gitlab.com/libvirt/libvirt-jenkins-ci)
-repository, which also contains the tooling used to generate
-Dockerfiles.
+[libvirt-ci](https://gitlab.com/libvirt/libvirt-ci) repository,
+which also contains the tooling used to generate Dockerfiles.
